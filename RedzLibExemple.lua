@@ -5,8 +5,11 @@ local Window = redzlib:MakeWindow({
   SubTitle = "by Name Hub",
   SaveFolder = "NameHub.lua"
 })
-
-local Tab1 = Window:MakeTab({"Um", "cherry"})
-local Tab2 = Window:MakeTab({"Dois", "swords"})
-local Tab3 = Window:MakeTab({"TrÃªs", "user"})
+Window:AddMinimizeButton({
+  Button = { Image = "rbxassetid://", BackgroundTransparency = 0 },
+  Corner = { CornerRadius = UDim.new(0, 6) }
+})
+local Tab1 = Window:MakeTab({"One", "cherry"})
+local Tab2 = Window:MakeTab({"Two", "swords"})
+local Tab3 = Window:MakeTab({"Three", "user"})
 
