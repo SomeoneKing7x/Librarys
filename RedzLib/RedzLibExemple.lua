@@ -1,4 +1,4 @@
-local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/SomeoneKing7x/Librarys/refs/heads/main/RedzLib.lua"))()
+local redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/SomeoneKing7x/Librarys/refs/heads/main/RedzLib/RedzLib.lua"))()
 
 local Window = redzlib:MakeWindow({
   Title = "Name Hub : GameTest",
