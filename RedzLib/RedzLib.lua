@@ -951,7 +951,7 @@ local SetProps, SetChildren, InsertTheme, Create do
 		end
 	end
 	
-	pcall(Save, "redz library V5.json")
+	pcall(Save, "Library Settings.json")
 end
 
 local Funcs = {} do
@@ -1402,7 +1402,7 @@ end
 
 function redzlib:MakeWindow(Configs)
 	local WTitle = Configs[1] or Configs.Name or Configs.Title or "redz Library V5"
-	local WMiniText = Configs[2] or Configs.SubTitle or "by : redz9999"
+	local WMiniText = Configs[2] or Configs.SubTitle or "by : redz9999 | A Lenda 😎🤌🏻"
 	
 	Settings.ScriptFile = Configs[3] or Configs.SaveFolder or false
 	
@@ -1769,7 +1769,7 @@ function redzlib:MakeWindow(Configs)
 	local ContainerList = {}
 	function Window:MakeTab(paste, Configs)
 		if type(paste) == "table" then Configs = paste end
-		local TName = Configs[1] or Configs.Title or "Tab!"
+		local TName = Configs[1] or Configs.Title or "Erro!"
 		local TIcon = Configs[2] or Configs.Icon or ""
 		
 		TIcon = redzlib:GetIcon(TIcon)
