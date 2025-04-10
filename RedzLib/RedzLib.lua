@@ -1919,7 +1919,7 @@ function redzlib:MakeWindow(Configs)
 			end
 			return Section
 		end
-		function Tab:AP(Configs)
+		function Tab:AddParagraph(Configs)
 			local PName = Configs[1] or Configs.Title or "Paragraph"
 			local PDesc = Configs[2] or Configs.Text or ""
 			
