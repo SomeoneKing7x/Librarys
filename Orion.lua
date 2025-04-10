@@ -649,11 +649,11 @@ function OrionLib:MakeWindow(WindowConfig)
 	AddConnection(CloseBtn.MouseButton1Up, function()
 		MainWindow.Visible = false
 		UIHidden = true
-		OrionLib:MakeNotification({
-			Name = "Interface Hidden",
-			Content = "Tap RightShift to reopen the interface",
-			Time = 5
-		})
+		--OrionLib:MakeNotification({
+		--      Name = "Interface Hidden",
+		--	Content = "Tap RightShift to reopen the interface",
+		--	Time = 5
+		--})
 		WindowConfig.CloseCallback()
 	end)
 
@@ -1710,11 +1710,11 @@ function OrionLib:MakeWindow(WindowConfig)
 		return ElementFunction   
 	end  
 	
-	OrionLib:MakeNotification({
-		Name = "UI Library Upgrade",
-		Content = "New UI Library Available at sirius.menu/discord and sirius.menu/rayfield",
-		Time = 5
-	})
+	--OrionLib:MakeNotification({
+	--	Name = "UI Library Upgrade",
+		--Content = "New UI Library Available at sirius.menu/discord and sirius.menu/rayfield",
+		--Time = 5
+	--})
 	
 
 	
