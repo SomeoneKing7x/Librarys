@@ -1,4 +1,4 @@
-klocal MarketplaceService = game:GetService("MarketplaceService")
+local MarketplaceService = game:GetService("MarketplaceService")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local HttpService = game:GetService("HttpService")
@@ -1919,7 +1919,7 @@ function redzlib:MakeWindow(Configs)
 			end
 			return Section
 		end
-		function Tab:AddParagraph(Configs)
+		function Tab:AP(Configs)
 			local PName = Configs[1] or Configs.Title or "Paragraph"
 			local PDesc = Configs[2] or Configs.Text or ""
 			
