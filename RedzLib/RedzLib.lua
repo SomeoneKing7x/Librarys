@@ -2532,7 +2532,7 @@ function redzlib:MakeWindow(Configs)
 			function Slider:Destroy() Button:Destroy() end
 			return Slider
 		end
-		function Tab:AddTextBox(Configs)
+		function Tab:AddBox(Configs)
 			local TName = Configs[1] or Configs.Name or Configs.Title or "Text Box"
 			local TDesc = Configs.Desc or Configs.Description or ""
 			local TDefault = Configs[2] or Configs.Default or ""
