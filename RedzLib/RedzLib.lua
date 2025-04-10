@@ -1615,7 +1615,7 @@ function redzlib:MakeWindow(Configs)
 		MainFrame.Visible = not MainFrame.Visible
 	end
 	function Window:AddMinimizeButton(Configs)
-		local Button = MakeDrag(Create("ImageButton", ScreenGui, {
+		local Button = Create("ImageButton", ScreenGui, {
 			Size = UDim2.fromOffset(45, 45), -- Modify Minimize Button Size Here 
 			Position = UDim2.fromScale(0.15, 0.15),
 			BackgroundTransparency = 1,
