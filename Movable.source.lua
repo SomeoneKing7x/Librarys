@@ -193,49 +193,85 @@ function Kavo.CreateLib(kavName, themeList)
         end
     end
     local ScreenGui = Instance.new("ScreenGui")
-    local Main = Instance.new("Frame")
-    local MainCorner = Instance.new("UICorner")
-    local MainHeader = Instance.new("Frame")
-    local headerCover = Instance.new("UICorner")
-    local coverup = Instance.new("Frame")
-    local title = Instance.new("TextLabel")
-    local close = Instance.new("ImageButton")
-    local MainSide = Instance.new("Frame")
-    local sideCorner = Instance.new("UICorner")
-    local coverup_2 = Instance.new("Frame")
-    local tabFrames = Instance.new("Frame")
-    local tabListing = Instance.new("UIListLayout")
-    local pages = Instance.new("Frame")
-    local Pages = Instance.new("Folder")
-    local infoContainer = Instance.new("Frame")
+local Main = Instance.new("Frame")
+local MainCorner = Instance.new("UICorner")
+local MainHeader = Instance.new("Frame")
+local headerCover = Instance.new("UICorner")
+local coverup = Instance.new("Frame")
+local title = Instance.new("TextLabel")
+local close = Instance.new("ImageButton")
+local MainSide = Instance.new("Frame")
+local sideCorner = Instance.new("UICorner")
+local coverup_2 = Instance.new("Frame")
+local tabFrames = Instance.new("Frame")
+local tabListing = Instance.new("UIListLayout")
+local pages = Instance.new("Frame")
+local Pages = Instance.new("Folder")
+local infoContainer = Instance.new("Frame")
+local blurFrame = Instance.new("Frame")
 
-    local blurFrame = Instance.new("Frame")
+Kavo:DraggingEnabled(MainHeader, Main)
 
-    Kavo:DraggingEnabled(MainHeader, Main)
+blurFrame.Name = "blurFrame"
+blurFrame.Parent = pages
+blurFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+blurFrame.BackgroundTransparency = 1
+blurFrame.BorderSizePixel = 0
+blurFrame.Position = UDim2.new(-0.0222222228, 0, -0.0371747203, 0)
+blurFrame.Size = UDim2.new(0, 376, 0, 289)
+blurFrame.ZIndex = 999
 
-    blurFrame.Name = "blurFrame"
-    blurFrame.Parent = pages
-    blurFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    blurFrame.BackgroundTransparency = 1
-    blurFrame.BorderSizePixel = 0
-    blurFrame.Position = UDim2.new(-0.0222222228, 0, -0.0371747203, 0)
-    blurFrame.Size = UDim2.new(0, 376, 0, 289)
-    blurFrame.ZIndex = 999
+ScreenGui.Parent = game.CoreGui
+ScreenGui.Name = LibName
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
 
-    ScreenGui.Parent = game.CoreGui
-    ScreenGui.Name = LibName
-    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    ScreenGui.ResetOnSpawn = false
+Main.Name = "Main"
+Main.Parent = ScreenGui
+Main.BackgroundColor3 = themeList.Background
+Main.ClipsDescendants = true
+Main.Position = UDim2.new(0.336503863, 0, 0.275485456, 0)
+Main.Size = UDim2.new(0, 525, 0, 318)
+Main.Active = true
+Main.Draggable = true
 
-    Main.Name = "Main"
-    Main.Parent = ScreenGui
-    Main.BackgroundColor3 = themeList.Background
-    Main.ClipsDescendants = true
-    Main.Position = UDim2.new(0.336503863, 0, 0.275485456, 0)
-    Main.Size = UDim2.new(0, 525, 0, 318)
-    Main.Active = true
-    Main.Draggable = true
+-- Área invisível para redimensionar no canto
+local resizeCorner = Instance.new("Frame")
+resizeCorner.Name = "ResizeCorner"
+resizeCorner.Parent = Main
+resizeCorner.Size = UDim2.new(0, 20, 0, 20)
+resizeCorner.Position = UDim2.new(1, -20, 1, -20)
+resizeCorner.BackgroundTransparency = 1
+resizeCorner.ZIndex = 1000
 
+-- Lógica de redimensionamento
+local draggingResize = false
+local userInput = game:GetService("UserInputService")
+
+resizeCorner.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		draggingResize = true
+		local startPos = input.Position
+		local startSize = Main.Size
+
+		local moveConn, endConn
+
+		moveConn = userInput.InputChanged:Connect(function(moveInput)
+			if moveInput.UserInputType == Enum.UserInputType.MouseMovement and draggingResize then
+				local delta = moveInput.Position - startPos
+				Main.Size = UDim2.new(0, math.max(200, startSize.X.Offset + delta.X), 0, math.max(100, startSize.Y.Offset + delta.Y))
+			end
+		end)
+
+		endConn = userInput.InputEnded:Connect(function(endInput)
+			if endInput.UserInputType == Enum.UserInputType.MouseButton1 then
+				draggingResize = false
+				moveConn:Disconnect()
+				endConn:Disconnect()
+			end
+		end)
+	end
+end)
     MainCorner.CornerRadius = UDim.new(0, 4)
     MainCorner.Name = "MainCorner"
     MainCorner.Parent = Main
