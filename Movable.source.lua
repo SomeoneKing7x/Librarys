@@ -126,7 +126,7 @@ local SettingsT = {
 
 }
 
-local Name = "KavoConfig.JSON"
+local Name = "Someone-Library.JSON"
 
 pcall(function()
 
@@ -216,7 +216,7 @@ function Kavo.CreateLib(kavName, themeList)
     blurFrame.Name = "blurFrame"
     blurFrame.Parent = pages
     blurFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    blurFrame.BackgroundTransparency = 1
+    blurFrame.BackgroundTransparency = 0.2
     blurFrame.BorderSizePixel = 0
     blurFrame.Position = UDim2.new(-0.0222222228, 0, -0.0371747203, 0)
     blurFrame.Size = UDim2.new(0, 376, 0, 289)
