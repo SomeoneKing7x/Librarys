@@ -199,7 +199,6 @@ local MainHeader = Instance.new("Frame")
 local headerCover = Instance.new("UICorner")
 local coverup = Instance.new("Frame")
 local title = Instance.new("TextLabel")
-local close = Instance.new("ImageButton")
 local MainSide = Instance.new("Frame")
 local sideCorner = Instance.new("UICorner")
 local coverup_2 = Instance.new("Frame")
@@ -234,6 +233,11 @@ Main.Position = UDim2.new(0.336503863, 0, 0.275485456, 0)
 Main.Size = UDim2.new(0, 525, 0, 318)
 Main.Active = true
 Main.Draggable = true
+
+MainHeader.Name = "MainHeader"
+MainHeader.Parent = Main
+MainHeader.Size = UDim2.new(1, 0, 0, 30)
+MainHeader.BackgroundTransparency = 1
 
 -- Área invisível para redimensionar no canto
 local resizeCorner = Instance.new("Frame")
