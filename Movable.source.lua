@@ -268,7 +268,7 @@ function Kavo.CreateLib(kavName, themeList)
     title.RichText = true
     title.Text = kavName
     title.TextColor3 = Color3.fromRGB(245, 245, 245)
-    title.TextSize = 16.000
+    title.TextSize = 17.000
     title.TextXAlignment = Enum.TextXAlignment.Left
 
     close.Name = "close"
@@ -290,7 +290,11 @@ function Kavo.CreateLib(kavName, themeList)
 			Position = UDim2.new(0, Main.AbsolutePosition.X + (Main.AbsoluteSize.X / 2), 0, Main.AbsolutePosition.Y + (Main.AbsoluteSize.Y / 2))
 		}):Play()
         wait(1)
-        ScreenGui:Destroy()
+       if Main.Size = UDim2.new(0, 525, 0, 318) then
+	Main.Size = UDim2.new(0, 525, 0, 20)
+	elseif Main.Size = UDim2.new(0, 525, 0, 20) then
+	Main.Size = UDim2.new(0, 525, 0, 318)
+	end
     end)
 
     MainSide.Name = "MainSide"
