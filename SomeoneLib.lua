@@ -529,7 +529,7 @@ function Kavo.CreateLib(kavName, themeList)
             sectionName.BackgroundTransparency = 1.000
             sectionName.BorderColor3 = Color3.fromRGB(0, 0, 0)
             sectionName.Position = UDim2.new(0.0198863633, 0, 0, 0)
-            sectionName.Size = UDim2.new(0.980113626, 0, 1, 0)
+            sectionName.Size = UDim2.new(2, 0, 1, 0)
             sectionName.Font = Enum.Font.Gotham
             sectionName.Text = secName
             sectionName.RichText = true
