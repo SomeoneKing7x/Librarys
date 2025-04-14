@@ -355,7 +355,7 @@ end)
     tabFrames.Name = "tabFrames"
     tabFrames.Parent = MainSide
     tabFrames.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    tabFrames.BackgroundTransparency = 1.000
+    tabFrames.BackgroundTransparency = 0
     tabFrames.Position = UDim2.new(0.0438990258, 0, -0.00066378375, 0)
     tabFrames.Size = UDim2.new(0, 135, 0, 283)
 
