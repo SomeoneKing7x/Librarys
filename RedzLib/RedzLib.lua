@@ -1754,7 +1754,259 @@ function redzlib:MakeWindow(Configs)
 		end)
 		return Dialog
 	end
+	function Window:SelectTab(TabSelect)
+		if type(TabSelect) == "number" then
+			redzlib.Tabs[TabSelect].func:Enable()
+		else
+			for _,Tab in pairs(redzlib.Tabs) do
+				if Tab.Cont == TabSelect.Cont then
+					Tab.func:Enable()
+				end
+			end
+		end
+	end
 	
+	local ContainerList = {}
+	function Window:MakeTab(paste, Configs)
+		if type(paste) == "table" then Configs = paste end
+		local TName = Configs[1] or Configs.Title or "Erro!"
+		local TIcon = Configs[2] or Configs.Icon or ""
+		
+		TIcon = redzlib:GetIcon(TIcon)
+		if not TIcon:find("rbxassetid://") or TIcon:gsub("rbxassetid://", ""):len() < 6 then
+			TIcon = false
+		end
+		
+		local TabSelect = Make("Button", MainScroll, {
+			Size = UDim2.new(1, 0, 0, 24)
+		})Make("Corner", TabSelect)
+		
+		local LabelTitle = InsertTheme(Create("TextLabel", TabSelect, {
+			Size = UDim2.new(1, TIcon and -25 or -15, 1),
+			Position = UDim2.fromOffset(TIcon and 25 or 15),
+			BackgroundTransparency = 1,
+			Font = Enum.Font.GothamMedium,
+			Text = TName,
+			TextColor3 = Theme["Color Text"],
+			TextSize = 10,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			TextTransparency = (FirstTab and 0.3) or 0,
+			TextTruncate = "AtEnd"
+		}), "Text")
+		
+		local LabelIcon = InsertTheme(Create("ImageLabel", TabSelect, {
+			Position = UDim2.new(0, 8, 0.5),
+			Size = UDim2.new(0, 13, 0, 13),
+			AnchorPoint = Vector2.new(0, 0.5),
+			Image = TIcon or "",
+			BackgroundTransparency = 1,
+			ImageTransparency = (FirstTab and 0.3) or 0
+		}), "Text")
+		
+		local Selected = InsertTheme(Create("Frame", TabSelect, {
+			Size = FirstTab and UDim2.new(0, 4, 0, 4) or UDim2.new(0, 4, 0, 13),
+			Position = UDim2.new(0, 1, 0.5),
+			AnchorPoint = Vector2.new(0, 0.5),
+			BackgroundColor3 = Theme["Color Theme"],
+			BackgroundTransparency = FirstTab and 1 or 0
+		}), "Theme")Make("Corner", Selected, UDim.new(0.5, 0))
+		
+		local Container = InsertTheme(Create("ScrollingFrame", {
+			Size = UDim2.new(1, 0, 1, 0),
+			Position = UDim2.new(0, 0, 1),
+			AnchorPoint = Vector2.new(0, 1),
+			ScrollBarThickness = 1.5,
+			BackgroundTransparency = 1,
+			ScrollBarImageTransparency = 0.2,
+			ScrollBarImageColor3 = Theme["Color Theme"],
+			AutomaticCanvasSize = "Y",
+			ScrollingDirection = "Y",
+			BorderSizePixel = 0,
+			CanvasSize = UDim2.new(),
+			Name = ("Container %i [ %s ]"):format(#ContainerList + 1, TName)
+		}, {
+			Create("UIPadding", {
+				PaddingLeft = UDim.new(0, 10),
+				PaddingRight = UDim.new(0, 10),
+				PaddingTop = UDim.new(0, 10),
+				PaddingBottom = UDim.new(0, 10)
+			}), Create("UIListLayout", {
+				Padding = UDim.new(0, 5)
+			})
+		}), "ScrollBar")
+		
+		table.insert(ContainerList, Container)
+		
+		if not FirstTab then Container.Parent = Containers end
+		
+		local function Tabs()
+			if Container.Parent then return end
+			for _,Frame in pairs(ContainerList) do
+				if Frame:IsA("ScrollingFrame") and Frame ~= Container then
+					Frame.Parent = nil
+				end
+			end
+			Container.Parent = Containers
+			Container.Size = UDim2.new(1, 0, 1, 150)
+			table.foreach(redzlib.Tabs, function(_,Tab)
+				if Tab.Cont ~= Container then
+					Tab.func:Disable()
+				end
+			end)
+			CreateTween({Container, "Size", UDim2.new(1, 0, 1, 0), 0.3})
+			CreateTween({LabelTitle, "TextTransparency", 0, 0.35})
+			CreateTween({LabelIcon, "ImageTransparency", 0, 0.35})
+			CreateTween({Selected, "Size", UDim2.new(0, 4, 0, 13), 0.35})
+			CreateTween({Selected, "BackgroundTransparency", 0, 0.35})
+		end
+		TabSelect.Activated:Connect(Tabs)
+		
+		FirstTab = true
+		local Tab = {}
+		table.insert(redzlib.Tabs, {TabInfo = {Name = TName, Icon = TIcon}, func = Tab, Cont = Container})
+		Tab.Cont = Container
+		
+		function Tab:Disable()
+			Container.Parent = nil
+			CreateTween({LabelTitle, "TextTransparency", 0.3, 0.35})
+			CreateTween({LabelIcon, "ImageTransparency", 0.3, 0.35})
+			CreateTween({Selected, "Size", UDim2.new(0, 4, 0, 4), 0.35})
+			CreateTween({Selected, "BackgroundTransparency", 1, 0.35})
+		end
+		function Tab:Enable()
+			Tabs()
+		end
+		function Tab:Visible(Bool)
+			Funcs:ToggleVisible(TabSelect, Bool)
+			Funcs:ToggleParent(Container, Bool, Containers)
+		end
+		function Tab:Destroy() TabSelect:Destroy() Container:Destroy() endfunction Window:SelectTab(TabSelect)
+		if type(TabSelect) == "number" then
+			redzlib.Tabs[TabSelect].func:Enable()
+		else
+			for _,Tab in pairs(redzlib.Tabs) do
+				if Tab.Cont == TabSelect.Cont then
+					Tab.func:Enable()
+				end
+			end
+		end
+	end
+	
+	local ContainerList = {}
+	function Window:MakeTab(paste, Configs)
+		if type(paste) == "table" then Configs = paste end
+		local TName = Configs[1] or Configs.Title or "Erro!"
+		local TIcon = Configs[2] or Configs.Icon or ""
+		
+		TIcon = redzlib:GetIcon(TIcon)
+		if not TIcon:find("rbxassetid://") or TIcon:gsub("rbxassetid://", ""):len() < 6 then
+			TIcon = false
+		end
+		
+		local TabSelect = Make("Button", MainScroll, {
+			Size = UDim2.new(1, 0, 0, 24)
+		})Make("Corner", TabSelect)
+		
+		local LabelTitle = InsertTheme(Create("TextLabel", TabSelect, {
+			Size = UDim2.new(1, TIcon and -25 or -15, 1),
+			Position = UDim2.fromOffset(TIcon and 25 or 15),
+			BackgroundTransparency = 1,
+			Font = Enum.Font.GothamMedium,
+			Text = TName,
+			TextColor3 = Theme["Color Text"],
+			TextSize = 10,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			TextTransparency = (FirstTab and 0.3) or 0,
+			TextTruncate = "AtEnd"
+		}), "Text")
+		
+		local LabelIcon = InsertTheme(Create("ImageLabel", TabSelect, {
+			Position = UDim2.new(0, 8, 0.5),
+			Size = UDim2.new(0, 13, 0, 13),
+			AnchorPoint = Vector2.new(0, 0.5),
+			Image = TIcon or "",
+			BackgroundTransparency = 1,
+			ImageTransparency = (FirstTab and 0.3) or 0
+		}), "Text")
+		
+		local Selected = InsertTheme(Create("Frame", TabSelect, {
+			Size = FirstTab and UDim2.new(0, 4, 0, 4) or UDim2.new(0, 4, 0, 13),
+			Position = UDim2.new(0, 1, 0.5),
+			AnchorPoint = Vector2.new(0, 0.5),
+			BackgroundColor3 = Theme["Color Theme"],
+			BackgroundTransparency = FirstTab and 1 or 0
+		}), "Theme")Make("Corner", Selected, UDim.new(0.5, 0))
+		
+		local Container = InsertTheme(Create("ScrollingFrame", {
+			Size = UDim2.new(1, 0, 1, 0),
+			Position = UDim2.new(0, 0, 1),
+			AnchorPoint = Vector2.new(0, 1),
+			ScrollBarThickness = 1.5,
+			BackgroundTransparency = 1,
+			ScrollBarImageTransparency = 0.2,
+			ScrollBarImageColor3 = Theme["Color Theme"],
+			AutomaticCanvasSize = "Y",
+			ScrollingDirection = "Y",
+			BorderSizePixel = 0,
+			CanvasSize = UDim2.new(),
+			Name = ("Container %i [ %s ]"):format(#ContainerList + 1, TName)
+		}, {
+			Create("UIPadding", {
+				PaddingLeft = UDim.new(0, 10),
+				PaddingRight = UDim.new(0, 10),
+				PaddingTop = UDim.new(0, 10),
+				PaddingBottom = UDim.new(0, 10)
+			}), Create("UIListLayout", {
+				Padding = UDim.new(0, 5)
+			})
+		}), "ScrollBar")
+		
+		table.insert(ContainerList, Container)
+		
+		if not FirstTab then Container.Parent = Containers end
+		
+		local function Tabs()
+			if Container.Parent then return end
+			for _,Frame in pairs(ContainerList) do
+				if Frame:IsA("ScrollingFrame") and Frame ~= Container then
+					Frame.Parent = nil
+				end
+			end
+			Container.Parent = Containers
+			Container.Size = UDim2.new(1, 0, 1, 150)
+			table.foreach(redzlib.Tabs, function(_,Tab)
+				if Tab.Cont ~= Container then
+					Tab.func:Disable()
+				end
+			end)
+			CreateTween({Container, "Size", UDim2.new(1, 0, 1, 0), 0.3})
+			CreateTween({LabelTitle, "TextTransparency", 0, 0.35})
+			CreateTween({LabelIcon, "ImageTransparency", 0, 0.35})
+			CreateTween({Selected, "Size", UDim2.new(0, 4, 0, 13), 0.35})
+			CreateTween({Selected, "BackgroundTransparency", 0, 0.35})
+		end
+		TabSelect.Activated:Connect(Tabs)
+		
+		FirstTab = true
+		local Tab = {}
+		table.insert(redzlib.Tabs, {TabInfo = {Name = TName, Icon = TIcon}, func = Tab, Cont = Container})
+		Tab.Cont = Container
+		
+		function Tab:Disable()
+			Container.Parent = nil
+			CreateTween({LabelTitle, "TextTransparency", 0.3, 0.35})
+			CreateTween({LabelIcon, "ImageTransparency", 0.3, 0.35})
+			CreateTween({Selected, "Size", UDim2.new(0, 4, 0, 4), 0.35})
+			CreateTween({Selected, "BackgroundTransparency", 1, 0.35})
+		end
+		function Tab:Enable()
+			Tabs()
+		end
+		function Tab:Visible(Bool)
+			Funcs:ToggleVisible(TabSelect, Bool)
+			Funcs:ToggleParent(Container, Bool, Containers)
+		end
+		function Tab:Destroy() TabSelect:Destroy() Container:Destroy() end
 		
 		function Tab:AddSection(Configs)
 			local SectionName = type(Configs) == "string" and Configs or Configs[1] or Configs.Name or Configs.Title or Configs.Section
