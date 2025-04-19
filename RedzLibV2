@@ -1621,7 +1621,7 @@ function redzlib:MakeWindow(Configs)
 			BackgroundTransparency = 1,
 			BackgroundColor3 = Theme["Color Hub 2"],
 			AutoButtonColor = false
-		}))
+		})
 		
 		local Stroke, Corner
 		if Configs.Corner then
